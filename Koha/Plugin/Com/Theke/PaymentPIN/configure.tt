@@ -1,0 +1,69 @@
+[% INCLUDE 'doc-head-open.inc' %]
+ <title>Koha &rsaquo; Tools &rsaquo; Plugins &rsaquo; PIN validation and payments</title>
+[% INCLUDE 'doc-head-close.inc' %]
+  <style>
+    .gobi {
+      width: 70%;
+    }
+  </style>
+  <script type="text/javascript">
+
+      $(document).ready(function(){
+        $("#refresh").on("click",function(e){
+            e.preventDefault;
+            $('#api_key').val(gen_api_key(32));
+        });
+      });
+
+      function gen_api_key(size) {
+        var output = "";
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (var i = 0; i < size; i++)
+          output += chars.charAt(Math.floor(Math.random() * chars.length));
+
+        return output;
+      }
+  </script>
+</head>
+<body>
+[% INCLUDE 'header.inc' %]
+[% INCLUDE 'cat-search.inc' %]
+
+<div id="breadcrumbs">
+    <a href="/cgi-bin/koha/mainpage.pl">Home</a> &rsaquo;
+    <a href="/cgi-bin/koha/mainpage.pl">Tools</a> &rsaquo;
+    <a href="/cgi-bin/koha/plugins/plugins-home.pl">Plugins</a> &rsaquo;
+    <a href="?class=[% CLASS %]&method=tool">PIN validation and payments</a>
+</div>
+
+<div id="doc3" class="yui-t2">
+  <div id="yui-main">
+    <h2>PIN validation configuration</h2>
+    <br/>
+      <h4>Configure</h4>
+      <form method="post">
+            <input type="hidden" name="class"  value="[% CLASS %]"/>
+            <input type="hidden" name="method" value="tool"/>
+            <input type="hidden" name="step"   value="configure"/>
+            <p>
+              <div class="input-group" style="width: 440px;">
+                <span class="input-group-addon" id="api_key_label">API key</span>
+                <input type="text" class="form-control" aria-describedby="api_key_label" name="api_key" id="api_key" value="[% api_key %]" />
+                <span class="input-group-btn">
+                    <span class="btn btn-default" id="refresh"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                </span>
+              </div>
+            </p>
+            <div class="input-group" style="width: 440px;">
+                <span class="input-group-addon" id="attribute_type_label">PIN patron attribute type</span>
+                <input type="text" class="form-control" aria-describedby="attribute_type_label" name="attribute_type" id="attribute_type" value="[% attribute_type %]" />
+            </div>
+            <br/>
+            <button type="submit" value="Save" class="btn btn-default" type="button">Save</button>
+      </form>
+  </div>
+  <div class="yui-b">
+    <div id="navmenu">&nbsp;</div>
+  </div>
+[% INCLUDE 'intranet-bottom.inc' %]

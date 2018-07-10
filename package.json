@@ -1,0 +1,31 @@
+{
+  "name": "koha-plugin-payment-pin",
+  "version": "0.0.1",
+  "previous_version": "0.0.0",
+  "description": "Koha plugin to validate PIN (as an extended patron attribute) and make payments",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-github-release": "^1.1.5",
+    "gulp-run": "^1.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thekesolutions/koha-plugin-payment-pin.git"
+  },
+  "author": "Tomas Cohen Arazi <tomascohen@theke.io>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/thekesolutions/koha-plugin-payment-pin/issues"
+  },
+  "homepage": "https://github.com/thekesolutions/koha-plugin-payment-pin#readme",
+  "dependencies": {
+    "datetime": "0.0.3",
+    "gulp-replace": "^0.6.1",
+    "jsonfile": "^4.0.0",
+    "node-datetime": "^2.0.0"
+  }
+}
