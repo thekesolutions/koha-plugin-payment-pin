@@ -1,5 +1,7 @@
 # Koha Payment+PIN plugin
 
+This plugin provides a simple way to validate patron's PIN (as an extended attribute) and to add credits through an API key.
+
 ## Downloading
 
 From the [release page](https://github.com/thekesolutions/koha-plugin-payment-pin/releases) you can download the relevant *.kpz file
