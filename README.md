@@ -58,17 +58,20 @@ If there's a problem with the API key, plugin configuration or the data is not c
 
 Data errors:
 ```
-500 Internal Server Error { "authorized": false, "error": "An explanation" }
+500 Internal Server Error
+{ "authorized": false, "error": "An explanation" }
 ```
 
 Invalid key:
 ```
-401 Unauthorized__ { "error": "Invalid API key" }
+401 Unauthorized
+{ "error": "Invalid API key" }
 ```
 
 Missing key:
 ```
-401 Unauthorized__ { "error": "API key missing" }
+401 Unauthorized
+{ "error": "API key missing" }
 ```
 
 ### PIN validation
@@ -85,12 +88,14 @@ Results:
 
 PIN and cardnumber combination valid:
 ```
-200 OK { "authorized": true }
+200 OK
+{ "authorized": true }
 ```
 
 PIN and cardnumber combination invalid:
 ```
-200 OK { "authorized": false }
+200 OK
+{ "authorized": false }
 ```
 
 ### Payment
@@ -107,9 +112,12 @@ Results:
 
 Everything ok:
 ```
-200 OK { "success": true}
+200 OK
+{ "success": true}
 ```
 
 Cardnumber doesn't exist:
 ```
-500 Internal Server Error { authorized => JSON::false, error => "Invalid cardnumber" }
+500 Internal Server Error
+{ authorized => JSON::false, error => "Invalid cardnumber" }
+```
