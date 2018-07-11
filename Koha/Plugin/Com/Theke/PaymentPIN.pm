@@ -137,8 +137,15 @@ sub pay {
     }
 
     unless ($patron) {
-       PaymentPIN::Exception->throw( { response => 
-           { authorized => JSON::false, error => "Invalid cardnumber" }
+       PaymentPIN::Exception->throw( { response =>
+           { error => "Invalid cardnumber" }
+       } );
+    }
+
+    my $amount = $payment_data->{amount} // 0;
+    unless ($amount > 0) {
+       PaymentPIN::Exception->throw( { response =>
+           { error => "Amounts can only be positive" }
        } );
     }
 

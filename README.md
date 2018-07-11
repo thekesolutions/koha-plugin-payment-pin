@@ -49,8 +49,8 @@ After that you can test the endpoints using the key like this:
 ```
 POST http://host_port/pin_validator.pl?api_key=THEAPIKEY
 {
-	"pin": 1234,
-	"cardnumber": "thecardnumber"
+    "pin": 1234,
+    "cardnumber": "thecardnumber"
 }
 ```
 
@@ -59,19 +59,26 @@ If there's a problem with the API key, plugin configuration or the data is not c
 Data errors:
 ```
 500 Internal Server Error
-{ "authorized": false, "error": "An explanation" }
+{
+    "authorized": false,
+    "error": "An explanation"
+}
 ```
 
 Invalid key:
 ```
 401 Unauthorized
-{ "error": "Invalid API key" }
+{
+    "error": "Invalid API key"
+}
 ```
 
 Missing key:
 ```
 401 Unauthorized
-{ "error": "API key missing" }
+{
+    "error": "API key missing"
+}
 ```
 
 ### PIN validation
@@ -89,13 +96,17 @@ Results:
 PIN and cardnumber combination valid:
 ```
 200 OK
-{ "authorized": true }
+{
+    "authorized": true
+}
 ```
 
 PIN and cardnumber combination invalid:
 ```
 200 OK
-{ "authorized": false }
+{
+    "authorized": false
+}
 ```
 
 ### Payment
@@ -113,11 +124,23 @@ Results:
 Everything ok:
 ```
 200 OK
-{ "success": true}
+{
+    "success": true
+}
+```
+
+Amount is invalid:
+```
+500 Internal Server Error
+{
+    "error": "Amounts can only be positive"
+}
 ```
 
 Cardnumber doesn't exist:
 ```
 500 Internal Server Error
-{ authorized => JSON::false, error => "Invalid cardnumber" }
+{
+    "error": "Invalid cardnumber"
+}
 ```
