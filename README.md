@@ -4,9 +4,10 @@ This plugin provides a simple way to validate patron's PIN (as an extended attri
 
 ## Downloading
 
-From the [release page](https://github.com/thekesolutions/koha-plugin-payment-pin/releases) you can download the relevant *.kpz file
+From the [release page](https://github.com/thekesolutions/koha-plugin-payment-pin/releases) you can download the relevant _*.kpz_ file
 
-# Installing
+
+## Installing
 
 Koha's Plugin System allows for you to add additional tools and reports to Koha that are specific to your library. Plugins are installed by uploading KPZ ( Koha Plugin Zip ) packages. A KPZ file is just a zip file containing the perl files, template files, and any other files necessary to make the plugin work.
 
@@ -36,5 +37,79 @@ Alias /plugin "/var/lib/koha/instance/plugins"
 Then restart _apache_:
 ```
 $ sudo systemctl restart apache2.service
+```
 
 Once set up is complete you will need to alter your UseKohaPlugins system preference. On the Tools page you will see the Tools Plugins and on the Reports page you will see the Reports Plugins.
+
+## Usage
+
+In order to use the provided scripts as an API, you need to generate (and save) an API key on the _configuration_ page for the plugin.
+After that you can test the endpoints using the key like this:
+
+```
+POST http://host_port/pin_validator.pl?api_key=THEAPIKEY
+{
+	"pin": 1234,
+	"cardnumber": "thecardnumber"
+}
+```
+
+If there's a problem with the API key, plugin configuration or the data is not correct, this are the possible results:
+
+Data errors:
+```
+500 Internal Server Error { "authorized": false, "error": "An explanation" }
+```
+
+Invalid key:
+```
+401 Unauthorized__ { "error": "Invalid API key" }
+```
+
+Missing key:
+```
+401 Unauthorized__ { "error": "API key missing" }
+```
+
+### PIN validation
+
+```
+POST http://host_port/pin_validator.pl?api_key=THEAPIKEY
+{
+    "pin": 1234,
+    "cardnumber": "thecardnumber"
+}
+```
+
+Results:
+
+PIN and cardnumber combination valid:
+```
+200 OK { "authorized": true }
+```
+
+PIN and cardnumber combination invalid:
+```
+200 OK { "authorized": false }
+```
+
+### Payment
+
+```
+POST http://host_port/payment.pl?api_key=THEAPIKEY
+{
+    "amount": 35,
+    "cardnumber": "thecardnumber"
+}
+```
+
+Results:
+
+Everything ok:
+```
+200 OK { "success": true}
+```
+
+Cardnumber doesn't exist:
+```
+500 Internal Server Error { authorized => JSON::false, error => "Invalid cardnumber" }

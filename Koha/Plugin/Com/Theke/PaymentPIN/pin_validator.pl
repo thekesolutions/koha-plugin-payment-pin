@@ -43,7 +43,7 @@ elsif ( !$payments->api_key_valid( $api_key ) ) {
     # Check API key is valid
     $payments->response({
         status => '401 Unauthorized',
-        response => { error => 'Invalid API key.' }
+        response => { error => 'Invalid API key' }
     });
 }
 else {

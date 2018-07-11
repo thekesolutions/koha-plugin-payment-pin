@@ -62,8 +62,9 @@ sub validate {
     my ( $self, $args ) = @_;
     my $cgi = $self->{cgi};
 
-    my $cardnumber = $cgi->param('cardnumber');
-    my $pin        = $cgi->param('pin');
+    my $validation_data = decode_json $cgi->param('POSTDATA');
+    my $cardnumber      = $validation_data->{cardnumber};
+    my $pin             = $validation_data->{pin};
 
     return try {
         my $attribute_type = $self->retrieve_data('attribute_type');
@@ -147,7 +148,7 @@ sub pay {
         }
     );
 
-    return { result => 1 };
+    return { success => JSON::true };
 }
 
 sub configure {
