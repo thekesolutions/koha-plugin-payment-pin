@@ -41,23 +41,6 @@ sub new {
     return $self;
 }
 
-sub tool {
-    my ( $self, $args ) = @_;
-    my $cgi = $self->{'cgi'};
-
-    my $step = $cgi->param('step') // 'configure';
-    if ( $step eq 'configure' ) {
-        $self->configure_store;
-    }
-    elsif ( $step eq 'validate' ) {
-        $self->validate;
-    }
-    else {
-        # requested to pay
-        $self->pay;
-    }
-}
-
 sub validate {
     my ( $self, $args ) = @_;
     my $cgi = $self->{cgi};
@@ -164,8 +147,23 @@ sub configure {
 
     my $template = $self->get_template({ file => 'configure.tt' });
 
-    my $api_key        = $self->retrieve_data( 'api_key' );
-    my $attribute_type = $self->retrieve_data( 'attribute_type' );
+    my $api_key;
+    my $attribute_type;
+
+    if ( $cgi->param('save') ) {
+
+        $api_key        = $cgi->param('api_key');
+        $attribute_type = $cgi->param('attribute_type');
+
+        # Store new API key
+        $self->store_data({ 'api_key'        => $api_key });
+        $self->store_data({ 'attribute_type' => $attribute_type });
+    }
+    else {
+
+        $api_key        = $self->retrieve_data( 'api_key' );
+        $attribute_type = $self->retrieve_data( 'attribute_type' );
+    }
 
     $template->param(
         api_key        => $api_key,
@@ -174,29 +172,6 @@ sub configure {
 
     print $cgi->header( -charset => 'utf-8' );
     print $template->output();
-}
-
-sub configure_store {
-    my ( $self, $args ) = @_;
-
-    my $cgi            = $self->{cgi};
-    my $api_key        = $cgi->param('api_key');
-    my $attribute_type = $cgi->param('attribute_type');
-
-    # Store new API key
-    $self->store_data({ 'api_key'        => $api_key });
-    $self->store_data({ 'attribute_type' => $attribute_type });
-
-    my $template = $self->get_template({ file => 'configure.tt' });
-
-    $template->param(
-        api_key        => $api_key,
-        attribute_type => $attribute_type
-    );
-
-    print $cgi->header( -charset => 'utf-8' );
-    print $template->output();
-
 }
 
 sub response {

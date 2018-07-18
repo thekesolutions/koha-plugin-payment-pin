@@ -44,8 +44,8 @@
       <h4>Configure</h4>
       <form method="post">
             <input type="hidden" name="class"  value="[% CLASS %]"/>
-            <input type="hidden" name="method" value="tool"/>
-            <input type="hidden" name="step"   value="configure"/>
+            <input type="hidden" name="method" value="[% METHOD %]"/>
+            <input type="hidden" name="save" value="1" />
             <p>
               <div class="input-group" style="width: 440px;">
                 <span class="input-group-addon" id="api_key_label">API key</span>
