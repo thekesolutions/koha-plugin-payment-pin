@@ -26,6 +26,7 @@ _/etc/apache2/sites-available/**instance**.conf_ file. Look for the intranet vho
 ```
 ScriptAlias /pin_validator.pl "/var/lib/koha/instance/plugins/Koha/Plugin/Com/Theke/PaymentPIN/pin_validator.pl"
 ScriptAlias /payment.pl "/var/lib/koha/instance/plugins/Koha/Plugin/Com/Theke/PaymentPIN/payment.pl"
+ScriptAlias /balance.pl "/var/lib/koha/instance/plugins/Koha/Plugin/Com/Theke/PaymentPIN/balance.pl"
 Alias /plugin "/var/lib/koha/instance/plugins"
 <Directory /var/lib/koha/instance/plugins>
       Options Indexes FollowSymLinks
@@ -108,6 +109,25 @@ PIN and cardnumber combination invalid:
     "authorized": false
 }
 ```
+
+### Balance
+
+```
+GET http://host_port/balance.pl?api_key=THEAPIKEY&cardnumber=thecardnumber
+```
+
+Results:
+
+Current patron's balance:
+```
+200 OK
+{
+    "balance": #
+}
+```
+
+Note: The amount is what the patron owes, then a negative value means the patron has
+outstanding credit.
 
 ### Payment
 

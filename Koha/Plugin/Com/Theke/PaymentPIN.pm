@@ -141,6 +141,28 @@ sub pay {
     return { success => JSON::true };
 }
 
+sub balance {
+    my ( $self, $args ) = @_;
+
+    my $cgi        = $self->{cgi};
+    my $cardnumber = $cgi->param('cardnumber');
+
+    my $patron;
+    if ( $cardnumber ) {
+        $patron =  Koha::Patrons->find( { cardnumber => $cardnumber } );
+    }
+
+    unless ($patron) {
+       PaymentPIN::Exception->throw( { response =>
+           { error => "Invalid cardnumber" }
+       } );
+    }
+
+    my $balance = $patron->account->balance;
+
+    return { balance => $balance };
+}
+
 sub configure {
     my ( $self, $args ) = @_;
     my $cgi = $self->{cgi};
